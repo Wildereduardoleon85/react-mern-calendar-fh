@@ -6,7 +6,7 @@ import { useCalendarStore, useUiStore } from '../../hooks'
 
 export const CalendarPage = () => {
   const { onOpenModal } = useUiStore()
-  const { events } = useCalendarStore()
+  const { events, setActiveEvent } = useCalendarStore()
   const lastView = localStorage.getItem('lastView') || 'week'
 
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -19,10 +19,6 @@ export const CalendarPage = () => {
     }
 
     return { style }
-  }
-
-  const onSelect = (event) => {
-    console.log({ click: event })
   }
 
   const onViewChanged = (event) => {
@@ -43,7 +39,7 @@ export const CalendarPage = () => {
         localizer={localizer}
         messages={getMessages()}
         onDoubleClickEvent={onOpenModal}
-        onSelectEvent={onSelect}
+        onSelectEvent={setActiveEvent}
         onView={onViewChanged}
         startAccessor='start'
         style={{ height: 'calc(100vh - 80px)' }}
