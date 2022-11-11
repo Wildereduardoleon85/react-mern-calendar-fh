@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { onSetActiveEvent } from '../store'
+import { onAddNewEvent, onSetActiveEvent } from '../store'
 
 export const useCalendarStore = () => {
   const { events, activeEvent } = useSelector((state) => state.calendar)
@@ -9,5 +9,17 @@ export const useCalendarStore = () => {
     dispatch(onSetActiveEvent(calendarEvent))
   }
 
-  return { events, activeEvent, setActiveEvent }
+  const startSavingEvent = async (calendarEvent) => {
+    // TODO: reach to the backend
+
+    // If everything goes well
+    if (calendarEvent._id) {
+      // Updating
+    } else {
+      // Creating
+      dispatch(onAddNewEvent({ ...calendarEvent, _id: new Date().getTime() }))
+    }
+  }
+
+  return { events, activeEvent, setActiveEvent, startSavingEvent }
 }

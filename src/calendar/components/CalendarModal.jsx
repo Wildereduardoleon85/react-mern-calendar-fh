@@ -12,7 +12,7 @@ registerLocale('es', es)
 
 export const CalendarModal = () => {
   const { isDateModalOpen, onCloseModal } = useUiStore()
-  const { activeEvent } = useCalendarStore()
+  const { activeEvent, startSavingEvent } = useCalendarStore()
 
   const [itTriedToSubmitTheForm, setItTriedToSubmitTheForm] = useState(false)
   const [formValues, setFormValues] = useState({
@@ -61,11 +61,7 @@ export const CalendarModal = () => {
 
   Modal.setAppElement('#root')
 
-  const onCloseDateModal = () => {
-    onCloseModal()
-  }
-
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault()
     setItTriedToSubmitTheForm(true)
 
@@ -78,13 +74,15 @@ export const CalendarModal = () => {
 
     if (formValues.title.trim().length <= 0) return
 
-    console.log(formValues)
+    await startSavingEvent(formValues)
+    onCloseModal()
+    setItTriedToSubmitTheForm(false)
   }
 
   return (
     <Modal
       isOpen={isDateModalOpen}
-      onRequestClose={onCloseDateModal}
+      onRequestClose={onCloseModal}
       style={customStyles}
       contentLabel='Example Modal'
       className='modal'
