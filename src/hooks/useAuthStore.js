@@ -18,8 +18,11 @@ export const useAuthStore = () => {
 
       dispatch(onLogin({ name, uid }))
     } catch (error) {
-      console.log(error)
-      dispatch(onLogout(error.response.data.msg))
+      if (error.response.status === 401) {
+        dispatch(onLogout('Wrong credentials'))
+      } else {
+        dispatch(onLogout('Server error'))
+      }
 
       setTimeout(() => {
         dispatch(clearErrorMessage())
