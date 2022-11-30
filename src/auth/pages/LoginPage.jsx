@@ -16,7 +16,7 @@ const registerFormFields = {
 }
 
 export const LoginPage = () => {
-  const { startLogin, errorMessage } = useAuthStore()
+  const { startLogin, errorMessage, startRegister } = useAuthStore()
 
   useEffect(() => {
     if (errorMessage) {
@@ -45,11 +45,14 @@ export const LoginPage = () => {
 
   const registerSubmit = (e) => {
     e.preventDefault()
-    console.log({
-      registerName,
-      registerEmail,
-      registerPassword,
-      registerPassword2,
+    if (registerPassword !== registerPassword2) {
+      Swal.fire('Authentication error', "The password does't match", 'error')
+      return
+    }
+    startRegister({
+      name: registerName,
+      email: registerEmail,
+      password: registerPassword,
     })
   }
 

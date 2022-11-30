@@ -4,7 +4,10 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     status: 'not-authenticated', // 'authenticated' | 'not-authenticated' | 'checking'
-    user: {},
+    user: {
+      name: '',
+      uid: '',
+    },
     errorMessage: null,
   },
   reducers: {
@@ -15,8 +18,10 @@ export const authSlice = createSlice({
     },
 
     onLogin: (state, { payload }) => {
+      const { name, uid } = payload
+
       state.status = 'authenticated'
-      state.user = payload
+      state.user = { name, uid }
       state.errorMessage = null
     },
 
