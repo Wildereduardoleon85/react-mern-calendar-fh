@@ -74,6 +74,8 @@ export const CalendarModal = () => {
 
     if (formValues.title.trim().length <= 0) return
 
+    // console.log(formValues)
+
     await startSavingEvent(formValues)
     onCloseModal()
     setItTriedToSubmitTheForm(false)
