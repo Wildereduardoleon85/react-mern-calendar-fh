@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Navbar, CalendarEvent, CalendarModal, FabAddNew, FabDelete } from '../'
@@ -6,8 +7,12 @@ import { useCalendarStore, useUiStore } from '../../hooks'
 
 export const CalendarPage = () => {
   const { onOpenModal } = useUiStore()
-  const { events, setActiveEvent } = useCalendarStore()
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore()
   const lastView = localStorage.getItem('lastView') || 'week'
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
 
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
